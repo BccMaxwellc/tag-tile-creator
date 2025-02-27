@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 export const TagTileCreator = () => {
   const [input, setInput] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [availableTags, setAvailableTags] = useState<string[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleGenerate = () => {
@@ -27,26 +27,25 @@ export const TagTileCreator = () => {
       return;
     }
 
-    setTags(newTags);
+    setAvailableTags(newTags);
     toast.success(`Generated ${newTags.length} tags`);
   };
 
   const handleClear = () => {
     setInput("");
-    setTags([]);
+    setAvailableTags([]);
     setSelectedTags([]);
     toast.success("Cleared all tags");
   };
 
-  const handleTagClick = (tag: string) => {
-    setSelectedTags(prev => {
-      const isSelected = prev.includes(tag);
-      if (isSelected) {
-        return prev.filter(t => t !== tag);
-      } else {
-        return [...prev, tag];
-      }
-    });
+  const handleAvailableTagClick = (tag: string) => {
+    setAvailableTags(prev => prev.filter(t => t !== tag));
+    setSelectedTags(prev => [...prev, tag]);
+  };
+
+  const handleSelectedTagClick = (tag: string) => {
+    setSelectedTags(prev => prev.filter(t => t !== tag));
+    setAvailableTags(prev => [...prev, tag]);
   };
 
   return (
@@ -75,19 +74,35 @@ export const TagTileCreator = () => {
         </div>
       </div>
 
-      {tags.length > 0 && (
+      {availableTags.length > 0 || selectedTags.length > 0 ? (
         <div className="space-y-6">
           <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200 dark:border-slate-700">
             <h2 className="text-lg font-semibold mb-4 text-slate-900 dark:text-white">
               Available Tags
             </h2>
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag, index) => (
+              {availableTags.map((tag, index) => (
                 <Tag
-                  key={`${tag}-${index}`}
+                  key={`available-${tag}-${index}`}
                   text={tag}
-                  isSelected={selectedTags.includes(tag)}
-                  onClick={() => handleTagClick(tag)}
+                  isSelected={false}
+                  onClick={() => handleAvailableTagClick(tag)}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+            <h2 className="text-lg font-semibold mb-4 text-slate-900 dark:text-white">
+              Selected Tags
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {selectedTags.map((tag, index) => (
+                <Tag
+                  key={`selected-${tag}-${index}`}
+                  text={tag}
+                  isSelected={true}
+                  onClick={() => handleSelectedTagClick(tag)}
                 />
               ))}
             </div>
@@ -95,7 +110,7 @@ export const TagTileCreator = () => {
 
           <PromptArea selectedTags={selectedTags} />
         </div>
-      )}
+      ) : null}
     </div>
   );
 };

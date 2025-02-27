@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Tag } from "./Tag";
 import { PromptArea } from "./PromptArea";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,13 @@ export const TagTileCreator = () => {
     toast.success(`Generated ${newTags.length} tags`);
   };
 
+  const handleClear = () => {
+    setInput("");
+    setTags([]);
+    setSelectedTags([]);
+    toast.success("Cleared all tags");
+  };
+
   const handleTagClick = (tag: string) => {
     setSelectedTags(prev => {
       const isSelected = prev.includes(tag);
@@ -51,12 +58,21 @@ export const TagTileCreator = () => {
           onChange={(e) => setInput(e.target.value)}
           className="min-h-[120px] bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700"
         />
-        <Button 
-          onClick={handleGenerate}
-          className="w-full sm:w-auto transition-all hover:scale-105"
-        >
-          Generate Tags
-        </Button>
+        <div className="flex gap-2 flex-wrap">
+          <Button 
+            onClick={handleGenerate}
+            className="w-full sm:w-auto transition-all hover:scale-105"
+          >
+            Generate Tags
+          </Button>
+          <Button 
+            onClick={handleClear}
+            variant="outline"
+            className="w-full sm:w-auto transition-all hover:scale-105"
+          >
+            Clear All
+          </Button>
+        </div>
       </div>
 
       {tags.length > 0 && (

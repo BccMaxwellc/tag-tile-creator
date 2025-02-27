@@ -40,13 +40,15 @@ export const PromptArea = ({ selectedTags }: PromptAreaProps) => {
         className="min-h-[100px] mb-4 bg-slate-50 dark:bg-slate-900"
         placeholder="Your generated prompt will appear here..."
       />
-      <Button 
-        onClick={handleCopy}
-        disabled={!finalPrompt}
-        className="w-full sm:w-auto transition-all hover:scale-105"
-      >
-        Copy to Clipboard
-      </Button>
+      <div className="flex gap-2 flex-wrap">
+        <Button 
+          onClick={handleCopy}
+          disabled={!finalPrompt}
+          className="w-full sm:w-auto transition-all hover:scale-105"
+        >
+          Copy to Clipboard
+        </Button>
+      </div>
     </motion.div>
   );
 };

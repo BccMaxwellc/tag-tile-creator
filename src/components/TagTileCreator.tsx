@@ -60,7 +60,7 @@ export const TagTileCreator = () => {
         <div className="flex gap-2 flex-wrap">
           <Button 
             onClick={handleGenerate}
-            className="w-full sm:w-auto transition-all hover:scale-105"
+            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white transition-all hover:scale-105"
           >
             Generate Tags
           </Button>

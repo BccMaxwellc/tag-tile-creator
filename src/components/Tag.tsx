@@ -20,7 +20,7 @@ export const Tag = ({ text, isSelected, onClick }: TagProps) => {
         transition-all duration-200 ease-in-out
         ${
           isSelected
-            ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+            ? "bg-blue-600 text-white dark:bg-blue-500 dark:text-white"
             : "bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-200 dark:hover:bg-slate-600"
         }
       `}
